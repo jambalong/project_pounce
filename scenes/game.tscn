@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://duc8wp16rrmxo"]
+
+[ext_resource type="PackedScene" uid="uid://damk6b01kmhgf" path="res://scenes/player.tscn" id="1_dwbew"]
+[ext_resource type="Texture2D" uid="uid://g7jckvk7dk8g" path="res://assets/tileset/background_001.png" id="1_nkwue"]
+[ext_resource type="Texture2D" uid="uid://d3jcb7gos8hfc" path="res://assets/tileset/tiles_001.png" id="2_nrhhu"]
+[ext_resource type="Script" path="res://scripts/camera/pixel_viewport_drawing.gd" id="4_cp4ig"]
+[ext_resource type="Script" path="res://scripts/camera/pixel_camera_2d.gd" id="5_apx4g"]
+[ext_resource type="Script" path="res://scripts/camera/camera_shake.gd" id="6_lft8v"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(161, 91)
+texture = ExtResource("1_nkwue")
+
+[node name="CollisionTiles" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(161, 91)
+texture = ExtResource("2_nrhhu")
+
+[node name="TilesStaticCollision" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TilesStaticCollision"]
+polygon = PackedVector2Array(25, 17, 65, 17, 65, 73, 97, 73, 97, 17, 289, 17, 289, 1, 1, 1, 1, 181, 321, 181, 321, 41, 281, 41, 281, 57, 313, 57, 313, 113, 257, 113, 257, 89, 225, 89, 225, 49, 193, 49, 193, 169, 161, 169, 161, 121, 129, 121, 129, 145, 81, 145, 81, 161, 57, 161, 57, 145, 25, 145, 25, 105, 41, 105, 41, 89, 25, 89)
+
+[node name="PixelViewportDrawing" type="Node2D" parent="."]
+z_index = 100
+script = ExtResource("4_cp4ig")
+
+[node name="PixelCamera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target_node")]
+limit_left = 0
+limit_top = 0
+script = ExtResource("5_apx4g")
+smooth = 0.0
+target_node = NodePath("../Player")
+
+[node name="CameraShake" type="Node2D" parent="PixelCamera2D"]
+script = ExtResource("6_lft8v")
+
+[node name="Player" parent="." instance=ExtResource("1_dwbew")]
+position = Vector2(41, 135)
+
+[node name="Area2D" type="Area2D" parent="."]

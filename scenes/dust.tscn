@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5inp01x3w8wv"]
+
+[ext_resource type="Texture2D" uid="uid://btslldt55txhr" path="res://assets/particles/smoke0.png" id="1_ual1g"]
+[ext_resource type="Script" path="res://scripts/particle_system/dust.gd" id="2_127ii"]
+
+[sub_resource type="Curve" id="Curve_u0yw6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.5, 0.0, 0, 0]
+point_count = 2
+
+[node name="Dust" type="CPUParticles2D"]
+z_index = 1
+lifetime = 0.5
+explosiveness = 0.9
+texture = ExtResource("1_ual1g")
+emission_shape = 3
+emission_rect_extents = Vector2(2, 1)
+direction = Vector2(0, -1)
+spread = 75.0
+gravity = Vector2(0, 5)
+initial_velocity_max = 16.0
+damping_min = 21.5
+damping_max = 22.5
+scale_amount_min = 0.25
+scale_amount_max = 0.65
+scale_amount_curve = SubResource("Curve_u0yw6")
+script = ExtResource("2_127ii")

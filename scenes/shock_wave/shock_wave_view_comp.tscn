@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://brrypmpjkjptq"]
+
+[ext_resource type="Shader" path="res://shaders/shock_wave.gdshader" id="1_r4wd4"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_d1q1y"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hssmn"]
+resource_local_to_scene = true
+shader = ExtResource("1_r4wd4")
+shader_parameter/chromatic = 0.0
+shader_parameter/shockWaves = SubResource("ViewportTexture_d1q1y")
+
+[sub_resource type="Gradient" id="Gradient_7mr0s"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_snjna"]
+gradient = SubResource("Gradient_7mr0s")
+
+[node name="Viewer" type="Control"]
+z_index = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport"]
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ApplySurface" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_hssmn")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture1D_snjna")

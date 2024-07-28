@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://co3prcdbdw2mt"]
+
+[ext_resource type="Script" path="res://scripts/debug/debug_box.gd" id="1_p3yo1"]
+
+[node name="DebugBox" type="HBoxContainer"]
+offset_right = 142.0
+offset_bottom = 23.0
+script = ExtResource("1_p3yo1")
+
+[node name="Name" type="Label" parent="."]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Coyote Time"
+text_overrun_behavior = 3
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 2
+text = "0"

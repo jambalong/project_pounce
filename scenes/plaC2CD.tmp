@@ -1,0 +1,144 @@
+[gd_scene load_steps=17 format=3 uid="uid://damk6b01kmhgf"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_kmavj"]
+[ext_resource type="Script" path="res://scripts/resource/platformer_resource.gd" id="2_153fs"]
+[ext_resource type="Texture2D" uid="uid://dw5yoiq2kla7t" path="res://assets/player/cat_idle.png" id="2_yk0qm"]
+[ext_resource type="Script" path="res://scripts/state_system/state_machine.gd" id="4_kf6cx"]
+[ext_resource type="Script" path="res://scripts/states/idle.gd" id="5_l0wso"]
+
+[sub_resource type="Resource" id="Resource_e6et7"]
+script = ExtResource("2_153fs")
+speed = 1.5
+acceleration = 0.25
+friction = 0.34
+turn_speed = 0.55
+gravity = 0.22
+fall_gravity = 0.8
+jump_gravity = 0.8
+max_gravity = 6.0
+gravity_scale = 1.0
+air_acceleration = 0.2
+air_control = 0.5
+air_friction = 0.4
+jump_height = 3.2
+jump_cutoff = 2.0
+can_wall_jump = 1.0
+can_wall_slide = 1.0
+wall_slide_gravity = 0.1
+wall_slide_max_gravity = 1.75
+wall_jump_height = 2.25
+wall_jump_min_height = 1.5
+wall_jump_offset = 3.0
+wall_jump_min_offset = 2.0
+wall_jump_cooldown = 0.1
+wall_jump_buffer = 0.05
+wall_safe_margin = 3.0
+dash_strength = 3.8
+dash_cooldown = 0.15
+dash_up_scale = 0.75
+dash_down_scale = 1.0
+dash_right_scale = 1.0
+dash_left_scale = 1.0
+dash_count = 1
+jump_buffer = 0.1
+coyote_time = 0.1
+edge_check_distance = 6.0
+corner_correction_steps = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uu7md"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahytn"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmjle"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc6yu"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t71jd"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bow2d"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esmgr"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysupb"]
+atlas = ExtResource("2_yk0qm")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y1wam"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uu7md")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahytn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmjle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc6yu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t71jd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bow2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esmgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysupb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ic0ab"]
+size = Vector2(6, 13)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_kmavj")
+character = SubResource("Resource_e6et7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_y1wam")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.180932
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_ic0ab")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("4_kf6cx")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("5_l0wso")
+
+[node name="Run" type="Node" parent="StateMachine"]
+
+[node name="Jump" type="Node" parent="StateMachine"]
+
+[node name="Fall" type="Node" parent="StateMachine"]
+
+[node name="Slide" type="Node" parent="StateMachine"]
