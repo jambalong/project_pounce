@@ -1,0 +1,109 @@
+[gd_scene load_steps=14 format=3 uid="uid://eiruetojjc5t"]
+
+[ext_resource type="Texture2D" uid="uid://dedsht8j601ma" path="res://assets/tileset/background_1.png" id="1_sapu4"]
+[ext_resource type="Texture2D" uid="uid://n807gvnote2m" path="res://assets/tileset/tiles_1.png" id="2_ubd80"]
+[ext_resource type="Script" path="res://scripts/camera/pixel_viewport_drawing.gd" id="3_om7jv"]
+[ext_resource type="Script" path="res://scripts/camera/pixel_camera_2d.gd" id="4_j6skw"]
+[ext_resource type="Script" path="res://scripts/camera/camera_shake.gd" id="5_3giyb"]
+[ext_resource type="PackedScene" uid="uid://damk6b01kmhgf" path="res://scenes/player.tscn" id="6_iafy6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hk1q"]
+size = Vector2(32, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6xoh"]
+size = Vector2(40, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tdr3c"]
+size = Vector2(24, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqmf5"]
+size = Vector2(8, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pf1r1"]
+size = Vector2(16, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lrwk2"]
+size = Vector2(8, 180)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8koyj"]
+size = Vector2(48, 28)
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("1_sapu4")
+
+[node name="CollisionTiles" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(160, 90)
+texture = ExtResource("2_ubd80")
+
+[node name="TilesStaticCollision" type="StaticBody2D" parent="."]
+z_index = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(16, 4)
+shape = SubResource("RectangleShape2D_0hk1q")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(16, 36)
+shape = SubResource("RectangleShape2D_0hk1q")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(80, 36)
+shape = SubResource("RectangleShape2D_0hk1q")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(224, 132)
+shape = SubResource("RectangleShape2D_0hk1q")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(160, 116)
+shape = SubResource("RectangleShape2D_0hk1q")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(48, 100)
+shape = SubResource("RectangleShape2D_0hk1q")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(180, 36)
+shape = SubResource("RectangleShape2D_j6xoh")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(284, 36)
+shape = SubResource("RectangleShape2D_tdr3c")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(4, 170)
+shape = SubResource("RectangleShape2D_kqmf5")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(40, 170)
+shape = SubResource("RectangleShape2D_pf1r1")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(316, 90)
+shape = SubResource("RectangleShape2D_lrwk2")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="TilesStaticCollision"]
+position = Vector2(288, 166)
+shape = SubResource("RectangleShape2D_8koyj")
+
+[node name="PixelViewportDrawing" type="Node2D" parent="."]
+z_index = 100
+script = ExtResource("3_om7jv")
+
+[node name="PixelCamera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target_node")]
+z_index = 100
+limit_left = 0
+limit_top = 0
+script = ExtResource("4_j6skw")
+smooth = 0.0
+target_node = NodePath("../Player")
+
+[node name="CameraShake" type="Node2D" parent="PixelCamera2D"]
+script = ExtResource("5_3giyb")
+
+[node name="Player" parent="." instance=ExtResource("6_iafy6")]
+position = Vector2(10, 31)

@@ -6,6 +6,9 @@ extends Node
 @export var game_view: Node
 @export var transition_node: Node
 
+@onready var viewport = $GameView/PixelPerfectContainer/PixelPerfectViewport
+@onready var current_level = $GameView/PixelPerfectContainer/PixelPerfectViewport/Game
+
 
 func _enter_tree() -> void:
 	check()
@@ -15,9 +18,24 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		add_to_group("scene_manager")
 	get_tree().node_removed.connect(check)
+	
+	current_level.level_changed.connect(_handle_level_changed)
 
 
-static func change(_scene_path: String):
+func _handle_level_changed(current_level_name: String):
+	var next_level
+	var next_level_number: int = current_level_name.to_int() + 1
+	var level_system_path = "res://scenes/level_system/level_"
+	
+	var next_level_path = level_system_path + str(next_level_number) + ".tscn"
+	
+	next_level = load(next_level_path).instantiate()
+	viewport.call_deferred("add_child", next_level)
+	current_level.queue_free()
+	current_level = next_level
+
+
+static func change_scene(_scene_path: String):
 	pass
 
 

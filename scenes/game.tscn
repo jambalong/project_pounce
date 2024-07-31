@@ -1,33 +1,41 @@
-[gd_scene load_steps=7 format=3 uid="uid://duc8wp16rrmxo"]
+[gd_scene load_steps=9 format=3 uid="uid://duc8wp16rrmxo"]
 
 [ext_resource type="PackedScene" uid="uid://damk6b01kmhgf" path="res://scenes/player.tscn" id="1_dwbew"]
 [ext_resource type="Texture2D" uid="uid://g7jckvk7dk8g" path="res://assets/tileset/background_001.png" id="1_nkwue"]
+[ext_resource type="Script" path="res://scripts/level_system/level_system.gd" id="1_rds2s"]
 [ext_resource type="Texture2D" uid="uid://d3jcb7gos8hfc" path="res://assets/tileset/tiles_001.png" id="2_nrhhu"]
 [ext_resource type="Script" path="res://scripts/camera/pixel_viewport_drawing.gd" id="4_cp4ig"]
 [ext_resource type="Script" path="res://scripts/camera/pixel_camera_2d.gd" id="5_apx4g"]
 [ext_resource type="Script" path="res://scripts/camera/camera_shake.gd" id="6_lft8v"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5un2o"]
+size = Vector2(8, 27)
+
 [node name="Game" type="Node2D"]
+script = ExtResource("1_rds2s")
+level_name = "game_level"
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(161, 91)
+position = Vector2(160, 90)
 texture = ExtResource("1_nkwue")
 
 [node name="CollisionTiles" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(161, 91)
+position = Vector2(160, 90)
 texture = ExtResource("2_nrhhu")
 
 [node name="TilesStaticCollision" type="StaticBody2D" parent="."]
+z_index = 5
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TilesStaticCollision"]
-polygon = PackedVector2Array(25, 17, 65, 17, 65, 73, 97, 73, 97, 17, 289, 17, 289, 1, 1, 1, 1, 181, 321, 181, 321, 41, 281, 41, 281, 57, 313, 57, 313, 113, 257, 113, 257, 89, 225, 89, 225, 49, 193, 49, 193, 169, 161, 169, 161, 121, 129, 121, 129, 145, 81, 145, 81, 161, 57, 161, 57, 145, 25, 145, 25, 105, 41, 105, 41, 89, 25, 89)
+polygon = PackedVector2Array(24, 16, 64, 16, 64, 72, 96, 72, 96, 16, 288, 16, 288, 0, 320, 0, 0, 0, 0, 180, 320, 180, 320, 40, 280, 40, 280, 56, 312, 56, 312, 112, 256, 112, 256, 88, 224, 88, 224, 48, 192, 48, 192, 168, 160, 168, 160, 120, 128, 120, 128, 144, 80, 144, 80, 160, 56, 160, 56, 144, 24, 144, 24, 104, 40, 104, 40, 88, 24, 88)
 
 [node name="PixelViewportDrawing" type="Node2D" parent="."]
 z_index = 100
 script = ExtResource("4_cp4ig")
 
 [node name="PixelCamera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target_node")]
+z_index = 100
 limit_left = 0
 limit_top = 0
 script = ExtResource("5_apx4g")
@@ -40,4 +48,11 @@ script = ExtResource("6_lft8v")
 [node name="Player" parent="." instance=ExtResource("1_dwbew")]
 position = Vector2(41, 135)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="NextLevel" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevel"]
+position = Vector2(320, 23.5)
+shape = SubResource("RectangleShape2D_5un2o")
+debug_color = Color(0.594758, 0.373026, 1, 0.42)
+
+[connection signal="body_entered" from="NextLevel" to="." method="_on_next_level_body_entered"]

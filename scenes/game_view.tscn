@@ -1,20 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvhwtkk7wppjf"]
+[gd_scene load_steps=7 format=3 uid="uid://cvhwtkk7wppjf"]
 
 [ext_resource type="Script" path="res://scripts/scene_manager/scene_manager.gd" id="1_8bwwl"]
 [ext_resource type="Script" path="res://scripts/scene_manager/game_view.gd" id="2_p7yl2"]
 [ext_resource type="PackedScene" uid="uid://duc8wp16rrmxo" path="res://scenes/game.tscn" id="3_afaec"]
 [ext_resource type="Shader" path="res://shaders/smooth_camera.gdshader" id="3_yd5mk"]
 [ext_resource type="Script" path="res://scripts/camera/pixel_perfect_container.gd" id="4_56l67"]
-[ext_resource type="Script" path="res://scripts/debug/debug_property.gd" id="6_vu8ne"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_326un"]
 shader = ExtResource("3_yd5mk")
 shader_parameter/smoothing_factor = 1.0
 shader_parameter/cam_offset = Vector2(-4, 0)
 
-[node name="SceneManager" type="Node" node_paths=PackedStringArray("main_nodes", "game_view", "transition_node")]
+[node name="SceneManager" type="Node" node_paths=PackedStringArray("game_view", "transition_node")]
 script = ExtResource("1_8bwwl")
-main_nodes = [NodePath("UserInterface")]
 game_view = NodePath("GameView")
 transition_node = NodePath("Transition")
 
@@ -27,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_p7yl2")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="GameView"]
+[node name="PixelPerfectContainer" type="SubViewportContainer" parent="GameView"]
 material = SubResource("ShaderMaterial_326un")
 layout_mode = 1
 anchors_preset = 15
@@ -39,24 +37,14 @@ stretch = true
 stretch_shrink = 4
 script = ExtResource("4_56l67")
 
-[node name="PixelPerfectViewport" type="SubViewport" parent="GameView/SubViewportContainer"]
+[node name="PixelPerfectViewport" type="SubViewport" parent="GameView/PixelPerfectContainer"]
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(320, 180)
 render_target_update_mode = 4
 
-[node name="Game" parent="GameView/SubViewportContainer/PixelPerfectViewport" instance=ExtResource("3_afaec")]
-
-[node name="CharacterPropertyList" type="CanvasLayer" parent="."]
-
-[node name="MarginContainer" type="MarginContainer" parent="CharacterPropertyList"]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("6_vu8ne")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CharacterPropertyList/MarginContainer"]
-layout_mode = 2
+[node name="Game" parent="GameView/PixelPerfectContainer/PixelPerfectViewport" instance=ExtResource("3_afaec")]
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3

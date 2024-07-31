@@ -3,6 +3,7 @@ extends Control
 
 var shock_wave = ShockWave.new()
 @onready var pixel_perfect_viewport: SubViewport = $PixelPerfectContainer/PixelPerfectViewport
+@onready var game = $PixelPerfectContainer/PixelPerfectViewport/Game
 
 
 # Called when the node enters the scene tree for the first time

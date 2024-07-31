@@ -16,7 +16,7 @@ func update_canvas() -> void:
 	
 	_sub_viewport.set_owner(get_tree().edited_scene_root)
 	_sub_viewport.name = "PixelPerfectViewport"
-	_sub_viewport.size = PixelPerfect2D.game_size + Vector2(2, 2)
+	#_sub_viewport.size = PixelPerfect2D.game_size + Vector2(2, 2)
 	_sub_viewport.disable_3d = true
 	_sub_viewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 	
@@ -24,11 +24,11 @@ func update_canvas() -> void:
 	name = "PixelPerfectContainer"
 	stretch = true
 	stretch_shrink = shrink_scale
-	layout_mode = 1
+	#layout_mode = 1
 	
 	set_anchors_preset(Control.PRESET_FULL_RECT)
-	size = viewport_size + Vector2(2, 2) * shrink_scale
-	position -= Vector2(1, 1) * shrink_scale
+	#size = viewport_size + Vector2(2, 2) * shrink_scale
+	#position -= Vector2(1, 1) * shrink_scale
 	set_script(preload("res://scripts/camera/pixel_perfect_container.gd"))
 	
 	var camera_material: ShaderMaterial = ShaderMaterial.new()
